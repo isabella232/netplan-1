@@ -60,6 +60,9 @@ class NetplanSet(utils.NetplanCommand):
             hint = None
             # Split at '.' but not at '\.' via negative lookbehind expression
             key_split = re.split(r'(?<!\\)\.', key)
+            # XXX: What happens if we set multiple netdef_ids as part of a mapping value?
+            #      we probably need to detect this situation, split it up into multiple
+            #      'set' commands and lookup the filenames individually
             if len(key_split) >= 3:
                 netdef_id = key_split[2].replace('\\.', '.')  # Unescape interface-ids, containing dots
                 filename = utils.netplan_get_filename_by_id(netdef_id, self.root_dir)
